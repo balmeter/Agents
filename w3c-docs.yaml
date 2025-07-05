@@ -1,83 +1,53 @@
 openapi: 3.1.0
 info:
-  title: W3C Document API
+  title: W3C Specifications API
+  description: Retrieve W3C specifications filtered by keyword such as "accessibility".
   version: 1.0.0
-  description: API to list and search W3C technical documents.
 servers:
   - url: https://api.w3.org
-    description: W3C Public API Server
+    description: W3C public API
 paths:
-  /doc:
+  /specifications:
     get:
-      operationId: listDocuments
-      summary: List W3C documents
-      description: Returns a list of W3C documents. Requires an API key.
+      operationId: getAccessibilitySpecifications
+      summary: Get W3C specifications filtered by accessibility
+      description: Returns a list of W3C specifications matching the keyword "accessibility".
       parameters:
         - name: apikey
           in: query
-          description: Your W3C API key.
           required: true
+          description: Your W3C API key
           schema:
             type: string
-        - name: title
+        - name: q
           in: query
-          description: Accessibility
           required: false
+          description: Keyword to search specifications (e.g., "accessibility")
           schema:
             type: string
-        - name: type
-          in: query
-          description: rec
-          required: false
-          schema:
-            type: string
-        - name: shortlink
-          in: query
-          description: Filter by document shortlink.
-          required: false
-          schema:
-            type: string
-        - name: embed
-          in: query
-          description: Include embedded resources (comma-separated, e.g., 'deliverer').
-          required: false
-          schema:
-            type: string
-        - name: page
-          in: query
-          description: Page number of results to return.
-          required: false
-          schema:
-            type: integer
-        - name: items
-          in: query
-          description: Number of items per page.
-          required: false
-          schema:
-            type: integer
+            default: accessibility
       responses:
         '200':
-          description: A list of W3C documents
+          description: A list of specifications
           content:
             application/json:
               schema:
                 type: object
                 properties:
+                  total:
+                    type: integer
                   _links:
                     type: object
-                  _embedded:
-                    type: object
-                    properties:
-                      doc:
-                        type: array
-                        items:
-                          type: object
-                          properties:
-                            title:
-                              type: string
-                            shortlink:
-                              type: string
-                            href:
-                              type: string
-                            type:
-                              type: string
+                  specifications:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        shortlink:
+                          type: string
+                        title:
+                          type: string
+                        status:
+                          type: string
+                        publisher:
+                          type: string
