@@ -21,7 +21,7 @@ paths:
             type: string
         - name: title
           in: query
-          description: accessibility
+          description: Accessibility
           required: false
           schema:
             type: string
@@ -39,7 +39,7 @@ paths:
             type: string
         - name: embed
           in: query
-          description: Include embedded resources (comma-separated, e.g., 'deliverer').
+          description: deliverer
           required: false
           schema:
             type: string
@@ -81,105 +81,3 @@ paths:
                               type: string
                             type:
                               type: string
-components:
-  schemas:
-    accessibilityCompliance:
-      type: object
-      properties:
-        overview:
-          type: string
-        reporting_method:
-          type: array
-          items:
-            type: object
-            properties:
-              name:
-                type: string
-              description:
-                type: string
-              template_source:
-                type: string
-              delivery_formats:
-                type: array
-                items:
-                  type: string
-              contents:
-                type: array
-                items:
-                  type: string
-        vpats:
-          type: object
-          properties:
-            editions:
-              type: array
-              items:
-                type: object
-                properties:
-                  name:
-                    type: string
-                  version:
-                    type: string
-                  description:
-                    type: string
-                  standards:
-                    type: array
-                    items:
-                      type: string
-                  conformance_levels:
-                    type: array
-                    items:
-                      type: string
-                  file:
-                    type: string
-                  primary_use_cases:
-                    type: array
-                    items:
-                      type: string
-    accessibilityStandards:
-      type: object
-      properties:
-        wcag:
-          type: object
-          properties:
-            title:
-              type: string
-            versions:
-              type: array
-              items:
-                type: string
-            levels:
-              type: array
-              items:
-                type: string
-            publisher:
-              type: string
-            links:
-              type: array
-              items:
-                type: string
-        section_508:
-          type: object
-          properties:
-            title:
-              type: string
-            updated:
-              type: string
-            references:
-              type: array
-              items:
-                type: string
-            notes:
-              type: string
-        en_301_549:
-          type: object
-          properties:
-            title:
-              type: string
-            version:
-              type: string
-            includes:
-              type: string
-            notes:
-              type: string
-            reference:
-              type: string
