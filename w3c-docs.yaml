@@ -1,44 +1,185 @@
-vpat_documents:
-  - edition: WCAG
-    version: 2.5Rev
-    purpose: >
-      For reporting accessibility conformance to WCAG 2.0, 2.1, and 2.2 standards,
-      typically for international or non-U.S. federal use cases.
-    includes:
-      - WCAG 2.0 (ISO/IEC 40500)
-      - WCAG 2.1
-      - WCAG 2.2
-    use_cases:
-      - Web applications and content
-      - International accessibility compliance
-      - DOJ and private sector assessments
-    file_reference: "VPAT2.5Rev_WCAG_February2025.docx"
-    tables:
-      - Level A
-      - Level AA
-      - Level AAA (optional, "Not Evaluated" permitted)
-    standards_url:
-      - "https://www.w3.org/TR/WCAG20/"
-      - "https://www.w3.org/TR/WCAG21/"
-      - "https://www.w3.org/TR/WCAG22/"
-
-  - edition: Revised Section 508
-    version: 2.5Rev
-    purpose: >
-      For reporting conformance to U.S. Revised Section 508 accessibility standards,
-      including WCAG 2.0 Level A and AA, software, and documentation compliance.
-    includes:
-      - Revised Section 508 (2017, updated 2018)
-      - WCAG 2.0 (Level A and AA)
-    use_cases:
-      - U.S. federal procurement
-      - Section 508 compliance evaluations
-    file_reference: "VPAT2.5Rev_508_February2025.docx"
-    tables:
-      - WCAG 2.0 Level A
-      - WCAG 2.0 Level AA
-      - WCAG 2.0 Level AAA (optional)
-      - Section 508 Chapters (e.g., Chapter 5: Software, Chapter 6: Documentation)
-    standards_url:
-      - "https://www.access-board.gov/ict/"
-      - "https://www.w3.org/TR/WCAG20/"
+openapi: 3.1.0
+info:
+  title: W3C Document API
+  version: 1.0.0
+  description: API to list and search W3C technical documents.
+servers:
+  - url: https://api.w3.org
+    description: W3C Public API Server
+paths:
+  /doc:
+    get:
+      operationId: listDocuments
+      summary: List W3C documents
+      description: Returns a list of W3C documents. Requires an API key.
+      parameters:
+        - name: apikey
+          in: query
+          description: Your W3C API key.
+          required: true
+          schema:
+            type: string
+        - name: title
+          in: query
+          description: Filter by document title.
+          required: false
+          schema:
+            type: string
+        - name: type
+          in: query
+          description: Filter by document type (e.g., 'rec', 'note').
+          required: false
+          schema:
+            type: string
+        - name: shortlink
+          in: query
+          description: Filter by document shortlink.
+          required: false
+          schema:
+            type: string
+        - name: embed
+          in: query
+          description: Include embedded resources (comma-separated, e.g., 'deliverer').
+          required: false
+          schema:
+            type: string
+        - name: page
+          in: query
+          description: Page number of results to return.
+          required: false
+          schema:
+            type: integer
+        - name: items
+          in: query
+          description: Number of items per page.
+          required: false
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: A list of W3C documents
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _links:
+                    type: object
+                  _embedded:
+                    type: object
+                    properties:
+                      doc:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            title:
+                              type: string
+                            shortlink:
+                              type: string
+                            href:
+                              type: string
+                            type:
+                              type: string
+components:
+  schemas:
+    accessibilityCompliance:
+      type: object
+      properties:
+        overview:
+          type: string
+        reporting_method:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              description:
+                type: string
+              template_source:
+                type: string
+              delivery_formats:
+                type: array
+                items:
+                  type: string
+              contents:
+                type: array
+                items:
+                  type: string
+        vpats:
+          type: object
+          properties:
+            editions:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  version:
+                    type: string
+                  description:
+                    type: string
+                  standards:
+                    type: array
+                    items:
+                      type: string
+                  conformance_levels:
+                    type: array
+                    items:
+                      type: string
+                  file:
+                    type: string
+                  primary_use_cases:
+                    type: array
+                    items:
+                      type: string
+    accessibilityStandards:
+      type: object
+      properties:
+        wcag:
+          type: object
+          properties:
+            title:
+              type: string
+            versions:
+              type: array
+              items:
+                type: string
+            levels:
+              type: array
+              items:
+                type: string
+            publisher:
+              type: string
+            links:
+              type: array
+              items:
+                type: string
+        section_508:
+          type: object
+          properties:
+            title:
+              type: string
+            updated:
+              type: string
+            references:
+              type: array
+              items:
+                type: string
+            notes:
+              type: string
+        en_301_549:
+          type: object
+          properties:
+            title:
+              type: string
+            version:
+              type: string
+            includes:
+              type: string
+            notes:
+              type: string
+            reference:
+              type: string
