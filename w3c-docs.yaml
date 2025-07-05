@@ -1,0 +1,83 @@
+openapi: 3.1.0
+info:
+  title: W3C Document API
+  version: 1.0.0
+  description: API to list and search W3C technical documents.
+servers:
+  - url: https://api.w3.org
+    description: W3C Public API Server
+paths:
+  /doc:
+    get:
+      operationId: listDocuments
+      summary: List W3C documents
+      description: Returns a list of W3C documents. Requires an API key.
+      parameters:
+        - name: apikey
+          in: query
+          description: Your W3C API key.
+          required: true
+          schema:
+            type: string
+        - name: title
+          in: query
+          description: Filter by document title.
+          required: false
+          schema:
+            type: string
+        - name: type
+          in: query
+          description: Filter by document type (e.g., 'rec', 'note').
+          required: false
+          schema:
+            type: string
+        - name: shortlink
+          in: query
+          description: Filter by document shortlink.
+          required: false
+          schema:
+            type: string
+        - name: embed
+          in: query
+          description: Include embedded resources (comma-separated, e.g., 'deliverer').
+          required: false
+          schema:
+            type: string
+        - name: page
+          in: query
+          description: Page number of results to return.
+          required: false
+          schema:
+            type: integer
+        - name: items
+          in: query
+          description: Number of items per page.
+          required: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: A list of W3C documents
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  _links:
+                    type: object
+                  _embedded:
+                    type: object
+                    properties:
+                      doc:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            title:
+                              type: string
+                            shortlink:
+                              type: string
+                            href:
+                              type: string
+                            type:
+                              type: string
