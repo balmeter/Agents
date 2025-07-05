@@ -21,13 +21,13 @@ paths:
             type: string
         - name: title
           in: query
-          description: Filter by document title.
+          description: accessibility
           required: false
           schema:
             type: string
         - name: type
           in: query
-          description: Filter by document type (e.g., 'rec', 'note').
+          description: rec
           required: false
           schema:
             type: string
